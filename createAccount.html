@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account | Join Us</title>
+  <style>
+    /* ===== Reset & Font ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #000000, #282828);
+      overflow: hidden;
+    }
+
+    /* ===== Animated Background ===== */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .circle:nth-child(1) {
+      width: 150px;
+      height: 150px;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .circle:nth-child(2) {
+      width: 250px;
+      height: 250px;
+      bottom: 15%;
+      right: 10%;
+      animation-delay: 2s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* ===== Signup Box ===== */
+    .signup-box {
+      position: relative;
+      width: 370px;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      color: #fff;
+      z-index: 10;
+    }
+
+    .signup-box h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .signup-box .input-box {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .signup-box .input-box input {
+      width: 100%;
+      padding: 10px 15px;
+      font-size: 16px;
+      color: #fff;
+      border: none;
+      outline: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      transition: background 0.3s ease;
+    }
+
+    .signup-box .input-box input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .signup-box .input-box input:focus {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .error-message {
+      color: #ff4d4d;
+      font-size: 14px;
+      margin-top: 5px;
+      text-align: center;
+      display: none;
+    }
+
+    .signup-box .btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #43e97b, #38f9d7);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .signup-box .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(56, 249, 215, 0.4);
+    }
+
+    .signup-box .links {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .signup-box .links a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .signup-box .links a:hover {
+      color: #38f9d7;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 400px) {
+      .signup-box {
+        width: 90%;
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Animation -->
+  <div class="circle"></div>
+  <div class="circle"></div>
+
+  <!-- Signup Form -->
+  <div class="signup-box">
+    <h2>Create Account</h2>
+    <form id="signupForm">
+      <div class="input-box">
+        <input type="text" id="fullname" placeholder="Full Name" required />
+      </div>
+      <div class="input-box">
+        <input type="email" id="email" placeholder="Email" required />
+      </div>
+      <div class="input-box">
+        <input type="password" id="password" placeholder="Password" required />
+      </div>
+      <div class="input-box">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+      </div>
+      <div class="input-box">
+        <input type="text" id="contact" maxlength="10" placeholder="Enter contact number" required/>
+      </div>
+      <p class="error-message" id="errorMessage">⚠ Passwords do not match</p>
+
+      <button type="submit" class="btn">Sign Up</button>
+      <div class="links">
+        Already have an account? <a href="login.html">Login here</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('signupForm');
+      const passwordInput = document.getElementById('password');
+      const confirmPassword = document.getElementById('confirmPassword');
+      const errorMessage = document.getElementById('errorMessage');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // stop default form submit
+
+        // Password validation
+        if (passwordInput.value !== confirmPassword.value) {
+          errorMessage.style.display = 'block';
+          return;
+        } else {
+          errorMessage.style.display = 'none';
+        }
+
+        // Collect form data
+        const username = document.getElementById('fullname').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = passwordInput.value.trim();
+        const contact = document.getElementById('contact').value.trim();
+
+        // Optional: simple validation
+        if (!username || !email || !password || !contact) {
+          alert('Please fill all fields');
+          return;
+        }
+
+        try {
+          // Send POST request
+          const response = await fetch('http://localhost:3535/users/save-Info', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password, contact, email })
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            alert(result.result || 'Account created successfully!');
+            form.reset();
+          } else {
+            alert('⚠ ' + (result.result || 'Signup failed.'));
+          }
+        } catch (err) {
+          console.error(err);
+          alert('⚠ Error connecting to server');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
